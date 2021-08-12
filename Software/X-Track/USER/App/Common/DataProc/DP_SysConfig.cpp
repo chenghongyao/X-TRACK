@@ -6,12 +6,12 @@ using namespace DataProc;
 
 static SysConfig_Info_t sysConfig =
 {
-    .cmd = SYSCONFIG_CMD_LOAD,
-    .soundEnable = true,
-    .longitudeDefault = CONFIG_GPS_LNG_DEFAULT,
-    .latitudeDefault = CONFIG_GPS_LAT_DEFAULT,
-    .language = CONFIG_SYSTEM_LANGUAGE_DEFAULT,
-    .mapSource = CONFIG_MAP_SOURCE_DEFAULT
+    SYSCONFIG_CMD_LOAD,
+    true,
+    CONFIG_GPS_LNG_DEFAULT,
+    CONFIG_GPS_LAT_DEFAULT,
+    CONFIG_SYSTEM_LANGUAGE_DEFAULT,
+    CONFIG_MAP_SOURCE_DEFAULT
 };
 
 static int onEvent(Account* account, Account::EventParam_t* param)

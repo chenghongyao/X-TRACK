@@ -35,6 +35,7 @@ private:
     void Update();
     void AttachEvent(lv_obj_t* obj);
     static void onTimerUpdate(lv_timer_t* timer);
+	static void onTimerAutoRun(lv_timer_t* timer);
     static void onEvent(lv_event_t* event);
     void onBtnClicked(lv_obj_t* btn);
     void onRecord(bool longPress);

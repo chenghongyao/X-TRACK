@@ -52,14 +52,24 @@ void Dialplate::onViewWillAppear()
     View.AppearAnimStart();
 }
 
+static lv_timer_t* timAutoRun;
+void Dialplate::onTimerAutoRun(lv_timer_t* timer) {
+	Dialplate* instance = (Dialplate*)timer->user_data;
+	instance->onRecord(true);
+	instance->Manager->Push("Pages/LiveMap");
+}
+
 void Dialplate::onViewDidAppear()
 {
     timer = lv_timer_create(onTimerUpdate, 1000, this);
+	timAutoRun = lv_timer_create(onTimerAutoRun, 1000, this);
+	lv_timer_set_repeat_count(timAutoRun, 1);
 }
 
 void Dialplate::onViewWillDisappear()
 {
     lv_timer_del(timer);
+	lv_timer_del(timAutoRun);
     //View.AppearAnimStart(true);
 }
 

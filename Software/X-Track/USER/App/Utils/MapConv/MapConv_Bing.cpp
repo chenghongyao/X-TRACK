@@ -36,7 +36,7 @@ int MapConv_Bing::ConvertMapPath(int32_t x, int32_t y, char* path, size_t len)
     int32_t tileY = y / priv.tileSize;
     int ret = snprintf(
                   path, len,
-                  "%s/%lX/%lX/map.bin", priv.dirPath, tileX, tileY
+                  "%s/%X/%X/map.bin", priv.dirPath, tileX, tileY
               );
 
     return ret;
