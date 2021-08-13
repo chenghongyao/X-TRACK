@@ -2,110 +2,60 @@
 FileName = X-Track-ESP32.GBR
 AutoAperture = True
 *************************************************************
-Generating : Bottom Overlay
-      File : X-Track-ESP32.GBO
+Generating : Bottom Solder
+      File : X-Track-ESP32.GBS
 
-    Adding Layer      : Bottom Overlay
+    Adding Layer      : Bottom Solder
 
-
-Used DCodes :
-    D10
-    D11
-    D12
-    D13
-    D116
-*************************************************************
-
-*************************************************************
-Generating : Top Paste
-      File : X-Track-ESP32.GTP
-
-    Adding Layer      : Top Paste
-
-    Adding Layer      : Top Layer
+    Adding Layer      : Bottom Layer
 
     Adding Layer      : Multi-Layer
 
 
 Used DCodes :
-    D15
-    D16
-    D17
-    D18
-    D19
-    D20
-    D21
-    D22
-    D23
-    D24
-    D25
-    D26
-    D27
-    D28
-    D29
-    D30
-    D31
-    D32
-    D33
-    D34
-    D35
-    D36
-    D37
-    D38
+    D39
+    D40
+    D45
+    D63
+    D64
+    D65
+    D66
+    D98
+    D99
+    D100
+    D101
+    D102
+    D103
+    D104
+    D105
+    D106
+    D107
+    D108
+    D109
+    D110
+    D111
+    D112
+    D113
+    D114
+    D115
 *************************************************************
 
 *************************************************************
-Generating : Top Overlay
-      File : X-Track-ESP32.GTO
+Generating : Gnd
+      File : X-Track-ESP32.G1
 
-    Adding Layer      : Top Overlay
-
-
-Used DCodes :
-    D10
-    D11
-    D12
-    D13
-    D14
-*************************************************************
-
-*************************************************************
-Generating : Top Pad Master
-      File : X-Track-ESP32.GPT
-
-    Adding Layer      : Top Layer
+    Adding Layer      : Gnd
 
     Adding Layer      : Multi-Layer
 
 
 Used DCodes :
-    D15
-    D16
-    D17
-    D18
-    D19
-    D20
-    D21
-    D22
-    D23
-    D24
-    D25
-    D26
-    D27
-    D28
-    D29
-    D30
-    D31
-    D32
-    D33
-    D34
-    D35
-    D36
-    D37
-    D38
     D74
     D75
     D76
+    D77
+    D78
+    D79
 *************************************************************
 
 *************************************************************
@@ -124,41 +74,6 @@ Used DCodes :
     D74
     D75
     D76
-    D80
-    D81
-    D82
-    D83
-    D84
-    D85
-    D86
-    D87
-    D88
-    D89
-    D90
-    D91
-    D92
-    D93
-    D94
-    D95
-    D96
-    D97
-*************************************************************
-
-*************************************************************
-Generating : Bottom Paste
-      File : X-Track-ESP32.GBP
-
-    Adding Layer      : Bottom Paste
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D15
-    D16
-    D21
     D80
     D81
     D82
@@ -225,53 +140,18 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
-Generating : Mechanical 1
-      File : X-Track-ESP32.GM1
+Generating : Bottom Overlay
+      File : X-Track-ESP32.GBO
 
-    Adding Layer      : Mechanical 1
+    Adding Layer      : Bottom Overlay
 
 
 Used DCodes :
+    D10
+    D11
     D12
-*************************************************************
-
-*************************************************************
-Generating : Bottom Solder
-      File : X-Track-ESP32.GBS
-
-    Adding Layer      : Bottom Solder
-
-    Adding Layer      : Bottom Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D39
-    D40
-    D45
-    D63
-    D64
-    D65
-    D66
-    D98
-    D99
-    D100
-    D101
-    D102
-    D103
-    D104
-    D105
-    D106
-    D107
-    D108
-    D109
-    D110
-    D111
-    D112
-    D113
-    D114
-    D115
+    D13
+    D116
 *************************************************************
 
 *************************************************************
@@ -293,6 +173,90 @@ Used DCodes :
     D77
     D78
     D79
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : X-Track-ESP32.GM1
+
+    Adding Layer      : Mechanical 1
+
+
+Used DCodes :
+    D12
+*************************************************************
+
+*************************************************************
+Generating : Top Paste
+      File : X-Track-ESP32.GTP
+
+    Adding Layer      : Top Paste
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+*************************************************************
+
+*************************************************************
+Generating : Bottom Paste
+      File : X-Track-ESP32.GBP
+
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D15
+    D16
+    D21
+    D80
+    D81
+    D82
+    D83
+    D84
+    D85
+    D86
+    D87
+    D88
+    D89
+    D90
+    D91
+    D92
+    D93
+    D94
+    D95
+    D96
+    D97
 *************************************************************
 
 *************************************************************
@@ -338,21 +302,84 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
-Generating : Gnd
-      File : X-Track-ESP32.G1
+Generating : Top Overlay
+      File : X-Track-ESP32.GTO
 
-    Adding Layer      : Gnd
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+*************************************************************
+
+*************************************************************
+Generating : Drill Drawing
+      File : X-Track-ESP32.GD1
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Drawing
+
+
+Used DCodes :
+    D117
+    D118
+*************************************************************
+
+*************************************************************
+Generating : Drill Guide
+      File : X-Track-ESP32.GG1
+
+    Adding Drill Pair : Top Layer-Bottom Layer
+
+    Adding Layer      : Drill Guide
+
+
+Used DCodes :
+    D117
+*************************************************************
+
+*************************************************************
+Generating : Top Pad Master
+      File : X-Track-ESP32.GPT
+
+    Adding Layer      : Top Layer
 
     Adding Layer      : Multi-Layer
 
 
 Used DCodes :
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
     D74
     D75
     D76
-    D77
-    D78
-    D79
 *************************************************************
 
 *************************************************************
@@ -404,32 +431,5 @@ Used DCodes :
     D77
     D78
     D79
-*************************************************************
-
-*************************************************************
-Generating : Drill Drawing
-      File : X-Track-ESP32.GD1
-
-    Adding Drill Pair : Top Layer-Bottom Layer
-
-    Adding Layer      : Drill Drawing
-
-
-Used DCodes :
-    D117
-    D118
-*************************************************************
-
-*************************************************************
-Generating : Drill Guide
-      File : X-Track-ESP32.GG1
-
-    Adding Drill Pair : Top Layer-Bottom Layer
-
-    Adding Layer      : Drill Guide
-
-
-Used DCodes :
-    D117
 *************************************************************
 
