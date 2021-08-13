@@ -1,4 +1,4 @@
-set(XTRACK_APP_DIR "../../User/App")
+set(XTRACK_APP_DIR "../../USER/App")
 
 
 file(GLOB XTRACK_SRCS 

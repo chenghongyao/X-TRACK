@@ -65,9 +65,6 @@ static const char *TAG = "HAL_SDCARD";
 #endif //CONFIG_IDF_TARGET_ESP32 || CONFIG_IDF_TARGET_ESP32S2
 #endif //USE_SPI_MODE
 
-static lv_fs_file_t file_test;
-
-
 bool HAL::SD_Init()
 {
     esp_err_t ret;
