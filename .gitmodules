@@ -1,0 +1,3 @@
+[submodule "Software/X-Track/ESPIDF/components/arduino"]
+	path = Software/X-Track/ESPIDF/components/arduino
+	url = git@github.com:chenghongyao/arduino-esp32

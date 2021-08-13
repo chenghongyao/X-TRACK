@@ -1,6 +1,10 @@
 #include "Common/HAL/HAL.h"
 // #include <windows.h>
 
+
+void Power_Init() {
+    
+}
 void HAL::Power_GetInfo(Power_Info_t* info)
 {
     // SYSTEM_POWER_STATUS sysPower = { 0 };
@@ -20,5 +24,8 @@ void HAL::Power_GetInfo(Power_Info_t* info)
 
 void HAL::Power_SetEventCallback(Power_CallbackFunction_t callback)
 {
+
+}
+void HAL::Power_Shutdown() {
 
 }
