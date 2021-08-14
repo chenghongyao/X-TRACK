@@ -4,10 +4,8 @@
 #include "Arduino.h"
 
 #define CONFIG_ENCODER_PUSH_PIN 37
-#define CONFIG_ENCODER_A_PIN 38
-#define CONFIG_ENCODER_B_PIN 39
-
-
+#define CONFIG_ENCODER_A_PIN    38
+#define CONFIG_ENCODER_B_PIN    39
 
 static ButtonEvent EncoderPush(5000);
 
@@ -21,7 +19,7 @@ static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     static bool lastState;
     data->enc_diff = HAL::Encoder_GetDiff();
-    
+
     bool isPush = HAL::Encoder_GetIsPush();
     
     data->state = isPush ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
