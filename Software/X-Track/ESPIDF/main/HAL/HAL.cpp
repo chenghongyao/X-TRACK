@@ -8,7 +8,7 @@ void HAL::HAL_Init()
     lv_init();
 
     Display_Init();
-    Encoder_Init();
+    Encoder_Init();    
     SD_Init();
 
     Buzz_init();

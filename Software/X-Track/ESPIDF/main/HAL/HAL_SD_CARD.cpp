@@ -93,6 +93,7 @@ bool HAL::SD_Init()
     // This initializes the slot without card detect (CD) and write protect (WP) signals.
     // Modify slot_config.gpio_cd and slot_config.gpio_wp if your board has these signals.
     sdmmc_slot_config_t slot_config = SDMMC_SLOT_CONFIG_DEFAULT();
+    // slot_config.gpio_cd = (gpio_num_t)35;
 
     // To use 1-line SD mode, uncomment the following line:
     // slot_config.width = 1;

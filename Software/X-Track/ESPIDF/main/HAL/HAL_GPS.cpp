@@ -1,181 +1,71 @@
 #include "Common/HAL/HAL.h"
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include "lvgl/lvgl.h"
-#include "Utils/GPX_Parser/GPX_Parser.h"
-#include "Config/Config.h"
+#include "TinyGPSPlus/src/TinyGPS++.h"
 
-#define PI 3.1415926535897932384626433832795f
-#define HALF_PI 1.5707963267948966192313216916398f
-#define TWO_PI 6.283185307179586476925286766559f
-#define DEG_TO_RAD 0.017453292519943295769236907684886f
-#define RAD_TO_DEG 57.295779513082320876798154814105f
-#define EULER 2.718281828459045235360287471352f
-#define radians(deg) ((deg)*DEG_TO_RAD)
-#define degrees(rad) ((rad)*RAD_TO_DEG)
-#define sq(x) ((x)*(x))
+#define GPS_SERIAL             Serial1
+#define DEBUG_SERIAL           Serial
+#define GPS_USE_TRANSPARENT    0
 
-typedef struct
-{
-    lv_fs_file_t file;
-    uint32_t size;
-}FileInfo_t;
-
-static HAL::GPS_Info_t gpsInfo;
-static GPX_Parser gpxParser;
-static FileInfo_t fileInfo;
-
-static double distanceBetween(double lat1, double long1, double lat2, double long2)
-{
-    // returns distance in meters between two positions, both specified
-    // as signed decimal-degrees latitude and longitude. Uses great-circle
-    // distance computation for hypothetical sphere of radius 6372795 meters.
-    // Because Earth is no exact sphere, rounding errors may be up to 0.5%.
-    // Courtesy of Maarten Lamers
-    double delta = radians(long1 - long2);
-    double sdlong = sin(delta);
-    double cdlong = cos(delta);
-    lat1 = radians(lat1);
-    lat2 = radians(lat2);
-    double slat1 = sin(lat1);
-    double clat1 = cos(lat1);
-    double slat2 = sin(lat2);
-    double clat2 = cos(lat2);
-    delta = (clat1 * slat2) - (slat1 * clat2 * cdlong);
-    delta = sq(delta);
-    delta += sq(clat2 * sdlong);
-    delta = sqrt(delta);
-    double denom = (slat1 * slat2) + (clat1 * clat2 * cdlong);
-    delta = atan2(delta, denom);
-    return delta * 6372795;
-}
-
-static double courseTo(double lat1, double long1, double lat2, double long2)
-{
-    // returns course in degrees (North=0, West=270) from position 1 to position 2,
-    // both specified as signed decimal-degrees latitude and longitude.
-    // Because Earth is no exact sphere, calculated course may be off by a tiny fraction.
-    // Courtesy of Maarten Lamers
-    double dlon = radians(long2 - long1);
-    lat1 = radians(lat1);
-    lat2 = radians(lat2);
-    double a1 = sin(dlon) * cos(lat2);
-    double a2 = sin(lat1) * cos(lat2) * cos(dlon);
-    a2 = cos(lat1) * sin(lat2) - a2;
-    a2 = atan2(a1, a2);
-    if (a2 < 0.0)
-    {
-        a2 += TWO_PI;
-    }
-    return degrees(a2);
-}
-
-static int Parser_FileReadByte(GPX_Parser* parser)
-{
-    FileInfo_t* info = (FileInfo_t*)parser->userData;
-    uint8_t data = 0;
-    lv_fs_read(&info->file, &data, 1, nullptr);
-    return data;
-}
-
-static int Parser_FileAvaliable(GPX_Parser* parser)
-{
-    FileInfo_t* info = (FileInfo_t*)parser->userData;
-    uint32_t cur = 0;
-    lv_fs_tell(&info->file, &cur);
-    return (info->size - cur);
-}
-
-static bool Parser_Init(GPX_Parser* parser, FileInfo_t* info)
-{
-    bool retval = false;
-    lv_fs_res_t res = lv_fs_open(&info->file, CONFIG_TRACK_VIRTUAL_GPX_FILE_PATH, LV_FS_MODE_RD);
-
-    if (res == LV_FS_RES_OK)
-    {
-        uint32_t cur = 0;
-        lv_fs_tell(&info->file, &cur);
-        lv_fs_seek(&info->file, 0L, LV_FS_SEEK_END);
-        lv_fs_tell(&info->file, &info->size);
-
-        /*Restore file pointer*/
-        lv_fs_seek(&info->file, 0L, LV_FS_SEEK_SET);
-
-        parser->SetCallback(Parser_FileAvaliable, Parser_FileReadByte);
-
-        parser->userData = info;
-
-        retval = true;
-    }
-    return retval;
-}
-
-bool HAL::GPS_GetInfo(GPS_Info_t* info)
-{
-    Clock_GetInfo(&gpsInfo.clock);
-    gpsInfo.longitude += 0.0001;
-    gpsInfo.course = 90;
-    *info = gpsInfo;
-    return true;
-}
+static TinyGPSPlus gps;
 
 void HAL::GPS_Init()
 {
-    gpsInfo.isVaild = true;
-    gpsInfo.satellites = 10;
-    gpsInfo.longitude = CONFIG_GPS_LNG_DEFAULT;
-    gpsInfo.latitude = CONFIG_GPS_LAT_DEFAULT;
+    GPS_SERIAL.begin(9600,SERIAL_8N1,26,25);
 
-    bool success = Parser_Init(&gpxParser, &fileInfo);
-
-    if (success)
-    {
-        GPS_Update();
-        GPS_Update();
-        lv_timer_create(
-            [](lv_timer_t* timer) {
-                GPS_Update();
-            },
-            CONFIG_GPS_REFR_PERIOD,
-            nullptr
-        );
-    }
+    Serial.print("GPS: TinyGPS++ library v. ");
+    Serial.print(TinyGPSPlus::libraryVersion());
+    Serial.println(" by Mikal Hart");
 }
 
 void HAL::GPS_Update()
 {
-    double speedKph = 0;
-    double course = 0;
-
-    GPX_Parser::Point_t point;
-    if (gpxParser.ReadNext(&point))
+#if GPS_USE_TRANSPARENT
+    while (GPS_SERIAL.available() > 0)
     {
-        double distance = GPS_GetDistanceOffset(&gpsInfo, point.longitude, point.latitude);
-        speedKph = distance * 3.6;
-
-        course = courseTo(
-            gpsInfo.latitude,
-            gpsInfo.longitude,
-            point.latitude,
-            point.longitude
-        );
-
-        gpsInfo.longitude = point.longitude;
-        gpsInfo.latitude = point.latitude;
-    }
-    else
-    {
-        lv_fs_seek(&fileInfo.file, 0, LV_FS_SEEK_SET);
+        DEBUG_SERIAL.write(GPS_SERIAL.read());
     }
 
-    gpsInfo.course = (float)course;
-    gpsInfo.speed = (float)speedKph;
-    gpsInfo.altitude = (rand() % 1000) / 10.0f;
+    while (DEBUG_SERIAL.available() > 0)
+    {
+        GPS_SERIAL.write(DEBUG_SERIAL.read());
+    }
+#else
+    while (GPS_SERIAL.available() > 0)
+    {
+        if (gps.encode(GPS_SERIAL.read()))
+        {
+        }
+    }
+#endif
 }
 
-double HAL::GPS_GetDistanceOffset(GPS_Info_t* info, double preLong, double preLat)
+bool HAL::GPS_GetInfo(GPS_Info_t* info)
 {
-    return distanceBetween(info->latitude, info->longitude, preLat, preLong);
+    memset(info, 0, sizeof(GPS_Info_t));
+
+    info->isVaild = gps.location.isValid();
+    info->longitude = gps.location.lng();
+    info->latitude = gps.location.lat();
+    info->altitude = gps.altitude.meters();
+    info->speed = gps.speed.kmph();
+    info->course = gps.course.deg();
+
+    info->clock.year = gps.date.year();
+    info->clock.month = gps.date.month();
+    info->clock.day = gps.date.day();
+    info->clock.hour = gps.time.hour();
+    info->clock.minute = gps.time.minute();
+    info->clock.second = gps.time.second();
+    info->satellites = gps.satellites.value();
+
+    return info->isVaild;
+}
+
+bool HAL::GPS_LocationIsValid()
+{
+    return gps.location.isValid();
+}
+
+double HAL::GPS_GetDistanceOffset(GPS_Info_t* info,  double preLong, double preLat)
+{
+    return gps.distanceBetween(info->latitude, info->longitude, preLat, preLong);
 }

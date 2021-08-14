@@ -3,9 +3,11 @@
 #include "freertos/task.h"
 #include "App.h"
 #include "Common/HAL/HAL.h"
+#include "Arduino.h"
 
 extern "C" void app_main(void)
 {
+    initArduino();
     HAL::HAL_Init();
     App_Init();
     
@@ -16,3 +18,4 @@ extern "C" void app_main(void)
     }
 
 }
+
