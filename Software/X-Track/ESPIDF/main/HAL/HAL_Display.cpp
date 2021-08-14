@@ -64,24 +64,9 @@ static void lv_port_lcd() {
     lv_disp_drv_register(&disp_drv);
 }
 
-// #define LV_TICK_PERIOD_MS 1
-// static void lv_tick_task(void *arg) {
-//     (void) arg;
-//     lv_tick_inc(LV_TICK_PERIOD_MS);
-// }
-
 void HAL::Display_Init() {
 
     lv_port_lcd();
-
-//    /* Create and start a periodic timer interrupt to call lv_tick_inc */
-//     const esp_timer_create_args_t periodic_timer_args = {
-//         .callback = &lv_tick_task,
-//         .name = "periodic_gui"
-//     };
-//     esp_timer_handle_t periodic_timer;
-//     ESP_ERROR_CHECK(esp_timer_create(&periodic_timer_args, &periodic_timer));
-//     ESP_ERROR_CHECK(esp_timer_start_periodic(periodic_timer, LV_TICK_PERIOD_MS * 1000));
     
 }
 

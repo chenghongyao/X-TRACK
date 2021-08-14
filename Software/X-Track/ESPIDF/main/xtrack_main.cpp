@@ -10,6 +10,7 @@ extern "C" void app_main(void)
     initArduino();
     HAL::HAL_Init();
     App_Init();
+    HAL::Power_SetEventCallback(App_Uninit);
     
     while (1) {
         /* Delay 1 tick (assumes FreeRTOS tick is 10ms */
