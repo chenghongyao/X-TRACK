@@ -14,7 +14,6 @@ static volatile int32_t EncoderDiff = 0;
 static bool EncoderDiffDisable = false;
 
 
-
 static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
 {
     static bool lastState;
@@ -23,7 +22,7 @@ static void encoder_read(lv_indev_drv_t * indev_drv, lv_indev_data_t * data)
     bool isPush = HAL::Encoder_GetIsPush();
     
     data->state = isPush ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
-    
+
     if(isPush != lastState)
     {
         HAL::Buzz_Tone(isPush ? 500 : 700, 20);
@@ -70,6 +69,7 @@ static void Buzz_Handler(int dir)
     HAL::Buzz_Tone(freq, 5);
 }
 
+
 static void Encoder_EventHandler()
 {
     if(!EncoderEnable || EncoderDiffDisable)
@@ -77,10 +77,20 @@ static void Encoder_EventHandler()
         return;
     }
 
-    int dir = (digitalRead(CONFIG_ENCODER_B_PIN) == LOW ? -1 : +1);
+    int dir;
+    if (digitalRead(CONFIG_ENCODER_A_PIN) == LOW)
+    {
+        dir = (digitalRead(CONFIG_ENCODER_B_PIN) == LOW ? -1 : +1);
+    }
+    else 
+    {
+        dir = (digitalRead(CONFIG_ENCODER_B_PIN) == LOW ? 1 : -1);
+    }
+
     EncoderDiff += dir;
     Buzz_Handler(dir);
 }
+
 
 static void Encoder_PushHandler(ButtonEvent* btn, int event)
 {
@@ -105,7 +115,7 @@ void HAL::Encoder_Init()
     pinMode(CONFIG_ENCODER_B_PIN, INPUT_PULLUP);
     pinMode(CONFIG_ENCODER_PUSH_PIN, INPUT_PULLUP);
 
-    attachInterrupt(CONFIG_ENCODER_A_PIN, Encoder_EventHandler, FALLING);
+    attachInterrupt(CONFIG_ENCODER_A_PIN, Encoder_EventHandler, CHANGE);
 
     EncoderPush.EventAttach(Encoder_PushHandler);
 

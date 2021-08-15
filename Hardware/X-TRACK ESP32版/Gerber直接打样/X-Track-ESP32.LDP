@@ -1,0 +1,3 @@
+Layer Pairs Export File for PCB: E:\Project\X-Track-ESP32\X-Track-ESP32.PcbDoc
+LayersSetName=Top_Bot_Thru_Holes|DrillFile=x-track-esp32-roundholes.txt|DrillLayers=gtl,g1,g2,gbl
+LayersSetName=Top_Bot_Slot_Holes|DrillFile=x-track-esp32-slotholes.txt|DrillLayers=gtl,g1,g2,gbl
