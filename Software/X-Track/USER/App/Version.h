@@ -47,10 +47,8 @@
 
 
 /* File System Version */
-#ifdef ARDUINO 
-#ifndef ESP_PLATFORM
+#if defined(ARDUINO) && !defined(ESP_PLATFORM)
 #  include "SdFat.h"
-#endif
 #  define VERSION_FILESYSTEM    "SDFAT v" VERSION_NUM_TO_STR(SD_FAT_VERSION)
 #else
 #  define VERSION_FILESYSTEM    "STDC"
