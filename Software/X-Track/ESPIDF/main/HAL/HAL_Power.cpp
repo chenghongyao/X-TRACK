@@ -49,7 +49,7 @@ void HAL::Power_Init()
 
     /*电池检测*/
     pinMode(CONFIG_BAT_DET_PIN, ANALOG);
-    pinMode(CONFIG_BAT_CHG_DET_PIN, INPUT_PULLDOWN);
+    pinMode(CONFIG_BAT_CHG_DET_PIN, INPUT_PULLUP);
 
 //    Power_SetAutoLowPowerTimeout(5 * 60);
 //    Power_HandleTimeUpdate();
@@ -157,7 +157,7 @@ void HAL::Power_GetInfo(Power_Info_t* info)
                 );
 
     info->usage = usage;
-    info->isCharging = (usage == 100 ? false : digitalRead(CONFIG_BAT_CHG_DET_PIN));
+    info->isCharging = !digitalRead(CONFIG_BAT_CHG_DET_PIN);
     info->voltage = voltage;
 }
 
