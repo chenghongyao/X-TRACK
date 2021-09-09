@@ -54,8 +54,9 @@ CHG_DET | 27
 
 
 # TODO
-- [] 只完成了LCD,SD卡驱动,需要完成其他硬件驱动(`main/HAL/HAL_*.cpp`);
+- [x] 只完成了LCD,SD卡驱动,需要完成其他硬件驱动(`main/HAL/HAL_*.cpp`);
 - [] ESP32好像对一些未初始化的数据不会清零，导致启动时的数据很大;
 - [] 使用主工程的lvgl组件？;
-- [] lvgl官方esp32驱动的`CONFIG_LV_DISPLAY_ORIENTATION_PORTRAIT` 设置有bug，只设置了`CONFIG_DISPLAY_ORIENTATION_PORTRAIT`;
-
+- [x] lvgl官方esp32驱动的`CONFIG_LV_DISPLAY_ORIENTATION_PORTRAIT` 设置有bug，只设置了`CONFIG_DISPLAY_ORIENTATION_PORTRAIT`;
+- [] 优化程序结构
+- [] 更新到最新版本
